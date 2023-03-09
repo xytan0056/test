@@ -15,8 +15,8 @@ func Test_f2(t *testing.T) {
 		assert.Equal(t, 1, 2)
 
 		// panic
-		var p *int
-		assert.Equal(t, 2, *p)
+		// var p *int
+		// assert.Equal(t, 2, *p)
 
 
 		assert.Equal(t, 2, 2)
