@@ -13,7 +13,12 @@ func Test_f2(t *testing.T) {
 	t.Run("case1", func(t *testing.T) {
 		assert.Equal(t, 1, 1)
 		assert.Equal(t, 1, 2)
-		panic("something")
+
+		// panic
+		var p *int
+		assert.Equal(t, 2, *p)
+
+
 		assert.Equal(t, 2, 2)
 	})
 }
