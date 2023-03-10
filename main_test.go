@@ -1,28 +1,26 @@
 package main
 
 import (
-	"github.com/stretchr/testify/assert"
+	"os"
 	"testing"
 )
 
-func Test_f1(t *testing.T) {
-	assert.True(t, false, "f1")
+var done = make(chan struct{})
+var logged = make(chan struct{})
+
+func TestFunc1(t *testing.T) {
+	t.Parallel()
+	go func() {
+		defer close(logged)
+		<-done
+		t.Log("log in go routine!")
+	}()
+	t.Log("log1?")
 }
 
-func Test_f2(t *testing.T) {
-	t.Run("case1", func(t *testing.T) {
-		assert.Equal(t, 1, 1)
-		assert.Equal(t, 1, 2)
-
-		// panic
-		// var p *int
-		// assert.Equal(t, 2, *p)
-
-
-		assert.Equal(t, 2, 2)
-	})
-}
-
-func Test_f3(t *testing.T) {
-	assert.True(t, true, "f1")
+func TestMain(m *testing.M) {
+	code := m.Run()
+	close(done) // screw up TestFunc1
+	<-logged
+	os.Exit(code)
 }
